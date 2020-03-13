@@ -8,7 +8,7 @@ class Product {
   final String id;
   final String name;
   final String details;
-  final double price;
+  final String price;
   final String picture;
 
   Product(this.id, this.name, this.details, this.price, this.picture);

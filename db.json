@@ -4,7 +4,7 @@
         "id": "1",
         "name": "iPhone 11 Pro",
         "details": "",
-        "price": 39900.00,
+        "price": "39900",
         "picture": "https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-11-pro-select-2019-family?wid=882&amp;hei=1058&amp;fmt=jpeg&amp;qlt=80&amp;op_usm=0.5,0.5&amp;.v=1567812930312"
     }]
 }
