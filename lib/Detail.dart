@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+
+
 class Product {
   final String id;
   final String name;
@@ -22,6 +24,8 @@ class Detail extends StatefulWidget {
 }
 
 class _MyDetailState extends State<Detail> {
+  int _n = 0;
+
   Future<List<Product>> getProduct() async {
     final response = await http.get(
         'https://my-json-server.typicode.com/nutpun/diversition_test/products');
@@ -41,11 +45,26 @@ class _MyDetailState extends State<Detail> {
     super.initState();
   }
 
+  void add() {
+    setState(() {
+      _n++;
+    });
+  }
+
+  void minus() {
+    setState(() {
+      if (_n != 0) _n--;
+    });
+  }
+ 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('ข้อมูลสินค้า',
+          title: Text('Detail Product',
               style: TextStyle(
                 color: Colors.white,
               )),
@@ -74,8 +93,8 @@ class _MyDetailState extends State<Detail> {
                           padding: EdgeInsets.all(1),
                           child: GestureDetector(
                             onTap: () {},
-                            child: Card(
-                              elevation: 4,
+                            child: Container(
+                           
                               child: Image.network(
                                 (snapshort.data[0].picture),
                                 width: 500,
@@ -104,31 +123,32 @@ class _MyDetailState extends State<Detail> {
                         color: Colors.grey[300],
                         borderRadius: BorderRadius.all(Radius.circular(10)),
                       ),
-                      padding: EdgeInsets.only(top: 0, left: 10),
+                      margin: EdgeInsets.all(5),
                       child: Column(
                         children: <Widget>[
                           Row(
                             children: <Widget>[
                               Icon(
-                                Icons.home,
-                                size: 18,
+                                Icons.phone_iphone,
+                                size: 20,
                                 color: Colors.blue,
                               ),
                               Text(
                                 snapshort.data[0].name,
                                 style:
-                                    TextStyle(fontSize: 10, color: Colors.blue),
+                                    TextStyle(fontSize: 16, color: Colors.blue),
                               ),
                               VerticalDivider(
-                                width: 55,
+                                width: 80,
                               ),
                               Row(
                                 children: <Widget>[
-                                  Icon(Icons.location_on,
+                                  Icon(Icons.color_lens,
                                       size: 18, color: Colors.blue),
-                                  Text("ภาคอีสาน » สกลนคร » อำเภอเมืองสกลนคร",
+                                  Text("สี:เทาสเปซเกรย์",
                                       style: TextStyle(
-                                          fontSize: 10, color: Colors.blue)),
+                                        fontSize: 16,
+                                      )),
                                 ],
                               )
                             ],
@@ -136,27 +156,186 @@ class _MyDetailState extends State<Detail> {
                           Row(
                             children: <Widget>[
                               Icon(
-                                Icons.directions_car,
+                                Icons.add_to_home_screen,
                                 color: Colors.blue,
-                                size: 18,
+                                size: 20,
                               ),
-                              Text("จำนวนโพสต์ 500 คัน",
-                                  style: TextStyle(fontSize: 10)),
+                              Text("จอภาพขนาด 8.5 นิ้ว",
+                                  style: TextStyle(fontSize: 16)),
                               VerticalDivider(
                                 width: 43,
                               ),
                               Row(
                                 children: <Widget>[
                                   Icon(
-                                    Icons.widgets,
+                                    Icons.memory,
                                     size: 18,
                                     color: Colors.blue,
                                   ),
-                                  Text("จำนวนสินค้า 50 รายการ",
-                                      style: TextStyle(fontSize: 10)),
+                                  Text("ความจุ 64 GB",
+                                      style: TextStyle(fontSize: 16)),
                                 ],
                               )
                             ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                            ),
+                            margin: const EdgeInsets.all(5.0),
+                            padding: EdgeInsets.only(top: 0, left: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "เลือกซื้อและเรียนรู้",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.check,
+                                      size: 16,
+                                      color: Colors.green,
+                                    ),
+                                    Text(
+                                      "จอภาพมีมุมมนที่รับกับดีไซน์แบบโค้งอันงดงาม​",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.check,
+                                      size: 16,
+                                      color: Colors.green,
+                                    ),
+                                    Text(
+                                      "iPhone 11 Pro และ iPhone 11 Pro Max มีความสามารถในการทนน้ำ​",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.check,
+                                      size: 16,
+                                      color: Colors.green,
+                                    ),
+                                    Text(
+                                      "หน้าจอจะมีขนาด 5.85 นิ้ว (iPhone 11 Pro)​",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.check,
+                                      size: 16,
+                                      color: Colors.green,
+                                    ),
+                                    Text(
+                                      "ค่าตามมาตรฐานที่ให้มานั้นจะใช้พื้นที่ประมาณ 11GB ถึง 14GB​",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.check,
+                                      size: 16,
+                                      color: Colors.green,
+                                    ),
+                                    Text(
+                                      "​ประกัน 3 ปี",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.check,
+                                      size: 16,
+                                      color: Colors.green,
+                                    ),
+                                    Text(
+                                      "iPhone ใหม่ทุกเครื่องมาพร้อมกับสิทธิ์ใช้ Apple TV+ ฟรี 1 ปี",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Text("เลือกจำนวนสินค้า"),
+                          ),
+                          Container(
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: <Widget>[
+                                  Container(
+                                    width: 30,
+                                    child: FloatingActionButton(
+                                      heroTag: "btn1",
+                                      onPressed: minus,
+                                      child: Icon(
+                                          const IconData(0xe15b,
+                                              fontFamily: 'MaterialIcons'),
+                                          color: Colors.black),
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                  Text('$_n', style: TextStyle(fontSize: 20.0)),
+                                  Container(
+                                    width: 30,
+                                    child: FloatingActionButton(
+                                      heroTag: "btn2",
+                                      onPressed: add,
+                                      child:
+                                          Icon(Icons.add, color: Colors.black),
+                                      backgroundColor: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          ButtonTheme(
+                            buttonColor: Colors.green,
+                            height: 30.0,
+                            child: RaisedButton(
+                              onPressed:(){ Navigator.pushNamed(context, '/payment');},
+                              child: Text("สั่งซื้อ",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 10)),
+                            ),
                           ),
                         ],
                       ),

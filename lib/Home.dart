@@ -1,15 +1,84 @@
+
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
+class Product {
+  final String id;
+  final String name;
+  final String details;
+  final String price;
+  final String picture;
 
+  Product(this.id, this.name, this.details, this.price, this.picture);
+}
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  Home({Key key}) : super(key: key);
+
+  @override
+  _MyHomeState createState() => _MyHomeState();
+}
+
+class _MyHomeState extends State<Home> {
+  Future<List<Product>> getProduct() async {
+    final response = await http.get(
+        'https://my-json-server.typicode.com/nutpun/diversition_test/products');
+    var data = json.decode(response.body);
+
+    for (var item in data) {
+      Product product = Product(item["id"], item['name'], item['details'],
+          item['price'], item['picture']);
+      products.add(product);
+    }
+    return products;
+  }
+
+  List<Product> products = [];
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("หน้าหลัก"),
+          title: Text('Home',
+              style: TextStyle(
+                color: Colors.white,
+              )),
       ),
-      body: Column(
+           bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            title: Text('Favorite'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_pin),
+            title: Text('Account'),
+          ),
+        ],
+        selectedItemColor: Colors.blue,
+      ),
+      body: Container(
+        child: FutureBuilder(
+            future: getProduct(),
+            builder: (BuildContext context, AsyncSnapshot snapshort) {
+              if (snapshort.data == null) {
+                return Container(
+                    child: Center(
+                  child: Text("Loading..."),
+                ));
+              } else {
+                return  Column(
         children: <Widget>[
           Container(
             margin: const EdgeInsets.all(5.0),
@@ -30,11 +99,13 @@ class Home extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.all(1),
                     child: GestureDetector(
-                     onTap: () { Navigator.pushNamed(context, '/detail');},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/detail');
+                      },
                       child: Card(
                         elevation: 4,
                         child: Image.network(
-                          "https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-11-pro-select-2019-family?wid=882&amp;hei=1058&amp;fmt=jpeg&amp;qlt=80&amp;op_usm=0.5,0.5&amp;.v=1567812930312",
+                          snapshort.data[0].picture,
                           width: 190,
                           height: 150,
                         ),
@@ -46,22 +117,21 @@ class Home extends StatelessWidget {
                       bottom: 10.0,
                       child: Container(
                         color: Colors.blue,
-                        child: Text("iPhone 11 Pro",
+                        child: Text( snapshort.data[0].name,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 12,color: Colors.white
                             )),
                       )),
                   Positioned(
                     right: 10.0,
                     bottom: 10.0,
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text("B 39,000",
-                              style: TextStyle(
-                                fontSize: 10,
-                              )),
-                        ]),
+                    child: Container(
+                        color: Colors.blue[200],
+                        child: Text( snapshort.data[0].price+" THB",
+                            style: TextStyle(
+                              fontSize: 12,
+                            )),
+                      )
                   ),
                   Positioned(
                     top: 10.0,
@@ -81,6 +151,9 @@ class Home extends StatelessWidget {
             ],
           ),
         ],
+      );
+              }
+            }),
       ),
     );
   }
