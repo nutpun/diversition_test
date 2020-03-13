@@ -1,0 +1,10 @@
+{
+
+    "products": [{
+        "id": "1",
+        "name": "Apple iPad Pro 2018 11 with Type Cover",
+        "details": "",
+        "price": 2500.50,
+        "picture": "https://via.placeholder.com/520x250"
+    }]
+}
